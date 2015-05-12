@@ -6,23 +6,24 @@ SECRET_NUMBER = rand(101)
 
 def check_guess(guess_string)
   guess =  guess_string.to_i
-  if guess > SECRET_NUMBER && (guess - SECRET_NUMBER) > 5
-    mes = 'Way too high!'
-    color = 'red'
-  elsif guess < SECRET_NUMBER && (SECRET_NUMBER - guess > 5)
-    mes = 'Way too low!'
-    color = 'red'
-  elsif guess > SECRET_NUMBER
+  color = 'palevioletred'
+  if guess > SECRET_NUMBER
     mes = 'too high!'
-    color = 'palevioletred'
   elsif guess < SECRET_NUMBER
     mes = 'too low!'
-    color = 'palevioletred'
   elsif guess == SECRET_NUMBER
     mes = 'You got it right!!'
     color = 'green'
   end
+  if diff(guess) > 5
+    mes = 'way ' + mes
+    color = 'red'
+  end
   [mes, color]
+end
+
+def diff(num)
+  (SECRET_NUMBER - num).abs
 end
 
 get '/' do
